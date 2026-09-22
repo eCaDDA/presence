@@ -1,7 +1,8 @@
-def should_surface(relevance: float, expired: bool, urgent: bool) -> bool:
-    if expired:
+from presence.models import CandidateIntervention
+
+
+def should_surface(candidate: CandidateIntervention) -> bool:
+    if candidate.expired:
         return False
-    
-    return relevance >= 0.8 or urgent
 
-
+    return candidate.relevance >= 0.8 or candidate.urgent
