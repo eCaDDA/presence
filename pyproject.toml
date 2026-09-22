@@ -1,10 +1,10 @@
 [project]
 name = "presence"
 version = "0.1.0"
-description = "Add your description here"
+description = "Experimental AI cognitive-exoskeleton and enhancer project"
 readme = "README.md"
 authors = [
-    { name = "Ethan Caldwell", email = "caldwellethan48@gmail.com" }
+    { name = "Ethan Caldwell", email = "332040004+eCaDDA@users.noreply.github.com" }
 ]
 requires-python = ">=3.12"
 dependencies = []

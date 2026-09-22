@@ -6,35 +6,37 @@ from presence.models import CandidateIntervention, Faculty
 
 def test_high_relevance_surfaces():
     result = should_surface(
-        candidate = CandidateIntervention(
+        candidate=CandidateIntervention(
             relevance=0.9,
             expired=False,
             urgent=False,
             cue_text="Interview — Tuesday",
             faculty=Faculty.WIT,
             attention_cost=0.2,
-            )
         )
+    )
 
     assert result is True
 
+
 def test_low_relevance_does_not_surface():
     result = should_surface(
-        candidate = CandidateIntervention(
+        candidate=CandidateIntervention(
             relevance=0.6,
             expired=False,
             urgent=False,
             cue_text="Interview — Tuesday",
             faculty=Faculty.WIT,
             attention_cost=0.2,
-            )
         )
+    )
 
     assert result is False
 
+
 def test_urgent_surfaces():
     result = should_surface(
-        candidate = CandidateIntervention(
+        candidate=CandidateIntervention(
             relevance=0.6,
             expired=False,
             urgent=True,
@@ -46,9 +48,10 @@ def test_urgent_surfaces():
 
     assert result is True
 
+
 def test_expired_does_not_surface():
     result = should_surface(
-        candidate = CandidateIntervention(
+        candidate=CandidateIntervention(
             relevance=0.95,
             expired=True,
             urgent=True,
@@ -60,6 +63,7 @@ def test_expired_does_not_surface():
 
     assert result is False
 
+
 def test_invalid_relevance_is_rejected():
     with pytest.raises(ValueError):
         CandidateIntervention(
@@ -70,6 +74,7 @@ def test_invalid_relevance_is_rejected():
             attention_cost=0.2,
         )
 
+
 def test_invalid_attention_cost_is_rejected():
     with pytest.raises(ValueError):
         CandidateIntervention(
@@ -77,5 +82,5 @@ def test_invalid_attention_cost_is_rejected():
             expired=False,
             cue_text="Interview",
             faculty=Faculty.WIT,
-            attention_cost=-1.0, 
+            attention_cost=-1.0,
         )
