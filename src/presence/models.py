@@ -9,6 +9,17 @@ class Faculty(Enum):
     SERENDIPITY = "serendipity"
 
 
+class Activity(Enum):
+    CONVERSATION = "conversation"
+    STUDYING = "studying"
+    WALKING = "walking"
+
+
+@dataclass
+class ContextFrame:
+    activity: Activity
+
+
 @dataclass
 class CandidateIntervention:
     relevance: float
