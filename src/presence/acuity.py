@@ -1,3 +1,5 @@
+from dataclasses import replace
+
 from presence.models import Activity, CandidateIntervention, ContextFrame, Faculty
 
 
@@ -14,3 +16,15 @@ def score_contextual_relevance(
         relevance -= 0.4
 
     return max(0.0, relevance)
+
+
+def contextualize_candidate(
+    candidate: CandidateIntervention,
+    context: ContextFrame,
+) -> CandidateIntervention:
+    contextual_relevance = score_contextual_relevance(candidate, context)
+
+    return replace(
+        candidate,
+        relevance=contextual_relevance,
+    )

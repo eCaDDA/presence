@@ -20,3 +20,24 @@ def propose_engram(
         faculty=Faculty.ENGRAM,
         attention_cost=0.2,
     )
+
+
+def propose_orient(
+    state: dict[str, str],
+    context: ContextFrame,
+) -> CandidateIntervention | None:
+    if context.activity is not Activity.WALKING:
+        return None
+
+    intention = state.get("wearer.current_intention")
+
+    if intention is None:
+        return None
+
+    return CandidateIntervention(
+        relevance=0.85,
+        expired=False,
+        cue_text=f"Remember: {intention}",
+        faculty=Faculty.ORIENT,
+        attention_cost=0.1,
+    )

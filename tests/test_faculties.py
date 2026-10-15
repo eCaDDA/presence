@@ -1,4 +1,4 @@
-from presence.faculties import propose_engram
+from presence.faculties import propose_engram, propose_orient
 from presence.models import Activity, ContextFrame, Faculty
 
 
@@ -29,5 +29,33 @@ def test_engram_does_not_propose_during_conversation():
     )
 
     result = propose_engram(state, context)
+
+    assert result is None
+
+
+def test_orient_proposes_intention_while_walking():
+    state = {
+        "wearer.current_intention": "Buy milk",
+    }
+
+    context = ContextFrame(
+        activity=Activity.WALKING,
+    )
+
+    result = propose_orient(state, context)
+
+    assert result is not None
+    assert result.faculty is Faculty.ORIENT
+    assert result.cue_text == "Remember: Buy milk"
+
+
+def test_orient_does_not_propose_without_intention():
+    state = {}
+
+    context = ContextFrame(
+        activity=Activity.WALKING,
+    )
+
+    result = propose_orient(state, context)
 
     assert result is None
