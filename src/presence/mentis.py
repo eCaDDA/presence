@@ -1,3 +1,6 @@
+from presence.models import StateDelta
+
+
 def remember_fact(
     state: dict[str, str],
     key: str,
@@ -11,3 +14,10 @@ def recall_fact(
     key: str,
 ) -> str | None:
     return state.get(key)
+
+
+def commit_state_delta(
+    state: dict[str, str],
+    delta: StateDelta,
+) -> None:
+    state[delta.key] = delta.value

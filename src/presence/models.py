@@ -35,3 +35,15 @@ class CandidateIntervention:
 
         if not 0.0 <= self.attention_cost <= 1.0:
             raise ValueError("attention_cost must be between 0.0 and 1.0")
+
+
+@dataclass
+class StateDelta:
+    key: str
+    value: str
+    source: str
+    confidence: float
+
+    def __post_init__(self):
+        if not 0.0 <= self.confidence <= 1.0:
+            raise ValueError("confidence must be between 0.0 and 1.0")
