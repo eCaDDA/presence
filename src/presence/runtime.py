@@ -1,7 +1,14 @@
 from presence.acuity import contextualize_candidate
 from presence.decision import choose_intervention
 from presence.faculties import propose_engram, propose_orient
-from presence.models import CandidateIntervention, ContextFrame
+from presence.mentis import commit_state_delta
+from presence.models import (
+    CandidateIntervention,
+    ContextFrame,
+    ExperienceOutcome,
+    StateDelta,
+)
+from presence.remembrance import propose_remembrance_delta
 
 
 def collect_candidates(
@@ -36,3 +43,17 @@ def run_decision_cycle(
         contextualized_candidates.append(contextualized_candidate)
 
     return choose_intervention(contextualized_candidates)
+
+
+def process_experience_outcome(
+    state: dict[str, str],
+    outcome: ExperienceOutcome,
+) -> StateDelta | None:
+    delta = propose_remembrance_delta(outcome)
+
+    if delta is None:
+        return None
+
+    commit_state_delta(state, delta)
+
+    return delta

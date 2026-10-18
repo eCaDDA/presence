@@ -1,5 +1,9 @@
-from presence.models import Activity, ContextFrame, Faculty
-from presence.runtime import collect_candidates, run_decision_cycle
+from presence.models import Activity, ContextFrame, ExperienceOutcome, Faculty
+from presence.runtime import (
+    collect_candidates,
+    process_experience_outcome,
+    run_decision_cycle,
+)
 
 
 def test_collect_candidates_while_studying():
@@ -77,3 +81,35 @@ def test_decision_cycle_chooses_silence_during_conversation():
     result = run_decision_cycle(state, context)
 
     assert result is None
+
+
+def test_experience_outcome_updates_mentis_when_support_need_remains():
+    state = {}
+
+    outcome = ExperienceOutcome(
+        faculty=Faculty.WIT,
+        assisted_success=True,
+        unaided_success=False,
+    )
+
+    delta = process_experience_outcome(state, outcome)
+
+    assert delta is not None
+    assert delta.value == "wit"
+    assert state[delta.key] == "wit"
+    assert state[delta.key] == Faculty.WIT.value
+
+
+def test_experience_outcome_leaves_mentis_unchanged_after_unaided_success():
+    state = {}
+
+    outcome = ExperienceOutcome(
+        faculty=Faculty.WIT,
+        assisted_success=True,
+        unaided_success=True,
+    )
+
+    delta = process_experience_outcome(state, outcome)
+
+    assert delta is None
+    assert state == {}
