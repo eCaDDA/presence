@@ -53,3 +53,13 @@ def selection_sort(numbers: list[int]) -> list[int]:
         )
 
     return numbers
+
+
+def selection_sorted_copy(
+    numbers: list[int],
+) -> list[int]:
+    numbers_copy = numbers.copy()
+
+    selection_sort(numbers=numbers_copy)
+
+    return numbers_copy

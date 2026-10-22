@@ -1,4 +1,9 @@
-from presence.search import binary_search, linear_search, selection_sort
+from presence.search import (
+    binary_search,
+    linear_search,
+    selection_sort,
+    selection_sorted_copy,
+)
 
 
 def test_search_returns_index():
@@ -49,3 +54,12 @@ def test_selection_sort_handles_empty_list():
     result = selection_sort(numbers=numbers)
 
     assert result == []
+
+
+def test_selection_sorted_copy_changes_only_numbers_copy():
+    numbers = [7, 3, 9, 2, 5]
+
+    result = selection_sorted_copy(numbers)
+
+    assert numbers == [7, 3, 9, 2, 5]
+    assert result == [2, 3, 5, 7, 9]
