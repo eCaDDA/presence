@@ -14,5 +14,5 @@ def propose_remembrance_delta(
         )
 
         return delta
-    else:
-        return None
+
+    return None

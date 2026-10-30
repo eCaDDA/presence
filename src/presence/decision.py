@@ -3,14 +3,14 @@ from presence.models import CandidateIntervention
 
 def should_surface(
     candidate: CandidateIntervention,
-) -> bool:  # decides if candidate is valid
+) -> bool:
     if candidate.expired:
         return False
 
     return candidate.relevance >= 0.8 or candidate.urgent
 
 
-def get_eligible_candidates(  # collects valid candidates together
+def get_eligible_candidates(
     candidates: list[CandidateIntervention],
 ) -> list[CandidateIntervention]:
     eligible = []
@@ -22,7 +22,7 @@ def get_eligible_candidates(  # collects valid candidates together
     return eligible
 
 
-def choose_intervention(  # chooses the best of the valid candidates
+def choose_intervention(
     candidates: list[CandidateIntervention],
 ) -> CandidateIntervention | None:
     winner = None
