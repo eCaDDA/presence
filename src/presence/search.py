@@ -68,16 +68,6 @@ def selection_sorted_copy(
     return numbers_copy
 
 
-graph = {
-    "A": ["B", "C"],
-    "B": ["D", "E"],
-    "C": ["F"],
-    "D": [],
-    "E": [],
-    "F": [],
-}
-
-
 def breadth_first_search(
     graph: dict[str, list[str]],
     start: str,
@@ -96,5 +86,25 @@ def breadth_first_search(
             if neighbour not in visited:
                 visited.add(neighbour)
                 queue.append(neighbour)
+
+    return order
+
+
+def depth_first_search(
+    graph: dict[str, list[str]],
+    start: str,
+) -> list[str]:
+    stack = [start]
+    visited = {start}
+    order = []
+
+    while stack:
+        node = stack.pop()
+        order.append(node)
+
+        for neighbour in reversed(graph[node]):
+            if neighbour not in visited:
+                visited.add(neighbour)
+                stack.append(neighbour)
 
     return order

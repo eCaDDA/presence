@@ -1,6 +1,7 @@
 from presence.search import (
     binary_search,
     breadth_first_search,
+    depth_first_search,
     linear_search,
     selection_sort,
     selection_sorted_copy,
@@ -80,3 +81,30 @@ def test_breadth_first_search_visits_graph_layer_by_layer():
     )
 
     assert result == ["A", "B", "C", "D", "E", "F"]
+
+
+def test_depth_first_search_visits_graph_branch_by_branch():
+    result = depth_first_search(
+        graph={
+            "A": ["B", "C"],
+            "B": ["D", "E"],
+            "C": ["F"],
+            "D": [],
+            "E": [],
+            "F": [],
+        },
+        start="A",
+    )
+
+    assert result == ["A", "B", "D", "E", "C", "F"]
+
+
+def test_depth_first_search_handles_cycle_without_revisiting_nodes():
+    graph = {
+        "A": ["B"],
+        "B": ["A"],
+    }
+
+    result = depth_first_search(graph, "A")
+
+    assert result == ["A", "B"]
