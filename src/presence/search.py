@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def linear_search(
     items: list[str],
     target: str,
@@ -63,3 +66,35 @@ def selection_sorted_copy(
     selection_sort(numbers=numbers_copy)
 
     return numbers_copy
+
+
+graph = {
+    "A": ["B", "C"],
+    "B": ["D", "E"],
+    "C": ["F"],
+    "D": [],
+    "E": [],
+    "F": [],
+}
+
+
+def breadth_first_search(
+    graph: dict[str, list[str]],
+    start: str,
+) -> list[str]:
+    queue = deque([start])  # double ended queue object
+    visited = {start}  # initialise set with start element
+    order = []
+
+    while queue:  # while there are elements in queue
+        node = queue.popleft()  # the current node is the leftmost element in queue, also remove this node from queue
+        order.append(
+            node
+        )  # order variable to track search order, should be in breadth first manner
+
+        for neighbour in graph[node]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+
+    return order
